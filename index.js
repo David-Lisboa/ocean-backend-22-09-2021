@@ -65,7 +65,7 @@ const app = express();
 
     // [POST] /personagens
     // Create
-    app.post("/personagens", function (req, res) {
+    app.post("/personagens", async function (req, res) {
         // Obtém o corpo da requisição e coloca na variável item
         const item = req.body;
 
@@ -77,9 +77,9 @@ const app = express();
             return;
         }
 
-        item.id = lista.push(item);
+       await collection.insertOne(item);
 
-        res.status(201).send(item);
+        res.status(201).send(itemAdicionado);
     });
 
     // [PUT] /personagens/:id
