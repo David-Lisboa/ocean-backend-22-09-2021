@@ -52,7 +52,11 @@ const app = express();
     app.get("/personagens/:id", async function (req, res) {
         const id = req.params.id;
 
+<<<<<<< HEAD
         const item = findById(id);
+=======
+        const item = await findById(id);
+>>>>>>> 3766b2a4c0357abd12d7f7d3d7650967016d9433
 
         if (!item) {
             res.status(404).send("Personagem não encontrado.");
@@ -65,6 +69,7 @@ const app = express();
 
     // [POST] /personagens
     // Create
+<<<<<<< HEAD
     app.post("/personagens", async function (req, res) {
         // Obtém o corpo da requisição e coloca na variável item
         const item = req.body;
@@ -80,11 +85,32 @@ const app = express();
        await collection.insertOne(item);
 
         res.status(201).send(itemAdicionado);
+=======
+    app.post("/personagens", function (req, res) {
+        // Obtém o corpo da requisição e coloca na variável item
+        const item = req.body;
+
+        if (!item) {
+            res.status(400).send(
+                "Chave 'nome' não foi encontrada no corpo da requisição."
+            );
+
+            return;
+        }
+
+        item.id = lista.push(item);
+
+        res.status(201).send(item);
+>>>>>>> 3766b2a4c0357abd12d7f7d3d7650967016d9433
     });
 
     // [PUT] /personagens/:id
     // Update
+<<<<<<< HEAD
     app.put("/personagens/:id", async function (req, res) {
+=======
+    app.put("/personagens/:id", function (req, res) {
+>>>>>>> 3766b2a4c0357abd12d7f7d3d7650967016d9433
         /*
     Objetivo: Atualizar uma personagem
     Passos:
@@ -94,9 +120,15 @@ const app = express();
     - Exibir que deu certo
     */
 
+<<<<<<< HEAD
         const id = req.params.id;
 
         const itemEncontrado = await findById(id);
+=======
+        const id = +req.params.id;
+
+        const itemEncontrado = findById(id);
+>>>>>>> 3766b2a4c0357abd12d7f7d3d7650967016d9433
 
         if (!itemEncontrado) {
             res.status(404).send("Personagem não encontrado.");
@@ -113,17 +145,27 @@ const app = express();
 
             return;
         }
+<<<<<<< HEAD
 
         await collection.updateOne(
             { _id: new ObjectId(id) }
             ,{ $set: novoItem}
         )       
+=======
+
+        const index = lista.indexOf(itemEncontrado);
+
+        novoItem.id = id;
+
+        lista[index] = novoItem;
+>>>>>>> 3766b2a4c0357abd12d7f7d3d7650967016d9433
 
         res.send("Personagem atualizada com sucesso!");
     });
 
     // [DELETE] /personagens/:id
     // Delete
+<<<<<<< HEAD
     app.delete("/personagens/:id", async function (req, res) {
         const id = req.params.id;
 
@@ -136,9 +178,29 @@ const app = express();
         }
 
         await collection.deleteOne({ _id: new ObjectId(id) });
+=======
+    app.delete("/personagens/:id", function (req, res) {
+        const id = +req.params.id;
+
+        const itemEncontrado = findById(id);
+
+        if (!itemEncontrado) {
+            res.status(404).send("Personagem não encontrado.");
+
+            return;
+        }
+
+        const index = lista.indexOf(itemEncontrado);
+
+        lista.splice(index, 1);
+>>>>>>> 3766b2a4c0357abd12d7f7d3d7650967016d9433
 
         res.send("Personagem removida com sucesso!");
     });
 
     app.listen(3000);
+<<<<<<< HEAD
 })();
+=======
+})();
+>>>>>>> 3766b2a4c0357abd12d7f7d3d7650967016d9433
